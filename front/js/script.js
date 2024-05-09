@@ -6,6 +6,7 @@ import {
 } from "./viewElements.js";
 
 import { Task } from "./Task.js";
+import { TaskRepository } from "./TaskRepository.js";
 
 const showAlert = () => {
   const inputs = Object.values(editTaskContainElements.inputs);
@@ -69,6 +70,45 @@ const createTask = (taskData) => {
   return new Task(inputTitleValue, inputDescriptionValue, priorityValue);
 };
 
+const getTimeCriationTask = (task) => {};
+
+const saveTask = (task) => {
+  const taskFormatedToJSON = JSON.stringify(task);
+};
+
+const setTaskCardData = (task) => {
+  const { tasksContain } = tasksContainElements;
+
+  /*   const timeOfCreation = getTimeCriationTask(task);
+  console.log(timeOfCreation);
+ */
+  tasksContain.innerHTML += `
+      <div class="task">
+          <div class="header-task">
+              <div class="about-task">
+                <span id="title">${task.title}</span>
+                <span id="time-of-creation">1 day ago</span>
+              </div>
+              <span id="priority">${task.priority}</span>
+          </div>
+          <div class="body-task">
+              <span id="description">${task.description}</span>
+          </div>
+          <div class="actions">
+              <button class="btn-action" id="edit">
+                  <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+              <button class="btn-action" id="delete">
+                  <i class="fa-solid fa-trash-can"></i>
+              </button>
+              <button class="btn-action" id="completed">
+                  <i class="fa-solid fa-check"></i>
+              </button>
+          </div>
+      </div>
+  `;
+};
+
 const addTask = () => {
   const isValidated = validateTask();
 
@@ -79,7 +119,9 @@ const addTask = () => {
 
     const task = createTask(taskData);
 
-    console.log(task.created);
+    saveTask(task);
+
+    //setTaskCardData(task);
   } else {
     addErrorStyleInputs();
     showAlert();
