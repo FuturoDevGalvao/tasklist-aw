@@ -1,0 +1,173 @@
+@import url("variables.css");
+
+.edit-task-contain {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  padding: 30px;
+  border-right: 3px solid #ccc;
+}
+
+.inputs-contain {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /*   border: 1px solid green;
+ */
+}
+
+.input-box {
+  position: relative;
+  width: 100%;
+  /*   border: 1px dashed red;
+ */
+}
+
+.input-box input {
+  font-size: 1.1rem;
+  padding-top: 25px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 95%;
+  border: none;
+  background-color: var(--input);
+  color: var(--font);
+  outline: none;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  transition: 0.3s;
+}
+
+.input-box input:hover {
+  background-color: var(--input-hover);
+}
+
+.input-box input:focus {
+  border-color: var(--button);
+  transition: 0.3s;
+}
+
+.input-box label {
+  position: absolute;
+  left: 13px;
+  bottom: 15px;
+  pointer-events: none;
+  transition: 0.3s;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.input-box input:focus ~ label,
+.input-box input:not(:placeholder-shown) ~ label {
+  transform: translateY(-15px);
+  font-size: 0.8rem;
+  transition: 0.3s;
+}
+
+.input-box input::placeholder {
+  opacity: 0;
+  transform: 0.3s;
+  color: #ccc;
+}
+
+.input-box input:focus::placeholder {
+  opacity: 1;
+  transition: 0.3s;
+}
+
+.errors::placeholder {
+  color: red !important;
+}
+
+.alert {
+  /*   border: 1px dashed darkcyan;
+ */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: 0.3s;
+  font-size: 0.1rem;
+  opacity: 0;
+  color: red;
+}
+
+.show-alert {
+  font-size: 0.9rem;
+  opacity: 1;
+  transition: 0.3s;
+}
+
+.priorities-contain {
+  width: 100%;
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+  /*   border: 1px dashed blue;
+ */
+}
+
+.priorities-contain span {
+  width: 25%;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+#priorities {
+  flex: 1;
+  background-color: var(--input);
+  border: none;
+  color: var(--font);
+  height: 100%;
+  padding: 15px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 5px;
+  outline: none;
+  border: 2px solid transparent;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+#priorities:hover {
+  background-color: var(--input-hover);
+}
+
+#priorities:focus {
+  border-color: var(--button);
+  transition: 0.3s;
+}
+
+#priorities option {
+  background-color: var(--input);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.button-contain {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  /*   border: 1px solid red;
+ */
+}
+
+.button-contain button {
+  width: 50%;
+  padding: 15px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: var(--button);
+  color: var(--font);
+  border: none;
+  border-radius: 8px;
+}

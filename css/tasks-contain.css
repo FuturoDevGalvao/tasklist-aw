@@ -1,0 +1,38 @@
+@import url("variables.css");
+
+.tasks-contain {
+  flex: 1;
+  /*   border: 1px dashed green;
+ */
+}
+
+.tasks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  height: 400px;
+  overflow-y: auto; /* Habilitar rolagem vertical quando necessário */
+  /*   border: 1px solid #ccc; 
+ */
+  padding: 30px;
+}
+
+.tasks-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  font-style: italic;
+  font-weight: 600;
+  gap: 10px;
+}
+.tasks-empty i {
+  font-size: 4rem;
+}
+
+.hide-tasks-empty {
+  display: none;
+}
