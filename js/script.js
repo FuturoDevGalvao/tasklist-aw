@@ -98,8 +98,8 @@ const addListenerElements = () => {
 
   btnAddTask.addEventListener("click", () => {
     addTask();
-    hideTaskEmpty();
   });
+  hideTaskEmpty();
 };
 
 window.onload = addListenerElements;

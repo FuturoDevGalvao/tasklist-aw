@@ -10,11 +10,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 30px;
   height: 400px;
   overflow-y: auto; /* Habilitar rolagem vertical quando necessário */
-  /*   border: 1px solid #ccc; 
+  /*   border: 1px solid #ccc;
  */
   padding: 30px;
 }
@@ -29,10 +28,108 @@
   font-weight: 600;
   gap: 10px;
 }
+
 .tasks-empty i {
   font-size: 4rem;
 }
 
 .hide-tasks-empty {
   display: none;
+}
+
+.task {
+  width: 100%;
+  padding: 0;
+  border-radius: 8px;
+  /*   border: 1px solid red;
+ */
+  background-color: var(--input);
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+.header-task {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 20px 20px 10px 20px;
+
+  /*   border: 1px dashed black;
+ */
+  overflow: hidden;
+}
+
+.about-task {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /*   background-color: brown;
+ */
+}
+
+#title {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+#time-of-creation {
+  font-size: 0.9rem;
+  color: var(--font-sec);
+}
+
+#priority {
+  position: absolute;
+  width: 150px;
+  top: 15px;
+  right: -40px;
+
+  transform: rotate(35deg);
+  background-color: red;
+  text-align: center;
+}
+
+.body-task {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: justify;
+  padding: 10px 20px;
+  /*   border: 1px dashed yellow;
+ */
+  font-weight: 500;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  /*   border: 1px dashed hotpink;
+ */
+  padding: 10px 20px 20px 20px;
+}
+
+.btn-action {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 15px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  background-color: var(--input);
+  color: var(--font-sec);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  transition: 0.3s;
+}
+
+.btn-action:hover {
+  color: var(--font);
+  background-color: var(--input-hover);
+  transition: 0.3s;
+  transform: scale(1.05);
 }
