@@ -3,7 +3,9 @@
 import {
   editTaskContainElements,
   tasksContainElements,
-} from "./js/viewElements.js";
+} from "./viewElements.js";
+
+import { Task } from "./Task.js";
 
 const showAlert = () => {
   const inputs = Object.values(editTaskContainElements.inputs);
@@ -61,6 +63,12 @@ const getTaskData = () => {
   };
 };
 
+const createTask = (taskData) => {
+  const { inputTitleValue, inputDescriptionValue, priorityValue } = taskData;
+
+  return new Task(inputTitleValue, inputDescriptionValue, priorityValue);
+};
+
 const addTask = () => {
   const isValidated = validateTask();
 
@@ -69,7 +77,9 @@ const addTask = () => {
   if (isValidated) {
     const taskData = getTaskData();
 
-    console.log(taskData);
+    const task = createTask(taskData);
+
+    console.log(task.created);
   } else {
     addErrorStyleInputs();
     showAlert();
