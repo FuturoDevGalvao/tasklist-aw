@@ -17,6 +17,5 @@ export const editTaskContainElements = {
 
 export const tasksContainElements = {
   tasksContain: document.querySelector(".tasks"),
-  //tasks: document.getElementById(),
   tasksEmpty: document.querySelector(".tasks-empty"),
 };
