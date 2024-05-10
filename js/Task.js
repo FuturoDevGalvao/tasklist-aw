@@ -3,15 +3,16 @@ export class Task {
   #description;
   #priority;
   #created;
+  #completed;
 
-  constructor(title, description, priority, created = null) {
+  constructor(title, description, priority, created = false) {
     this.#title = title;
     this.#description = description;
     this.#priority = priority;
+    this.#completed = false;
 
-    this.#created =
-      created ||
-      new Date().toLocaleString("pt-br", {
+    if (created) {
+      this.#created = new Date().toLocaleString("pt-br", {
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
@@ -19,6 +20,7 @@ export class Task {
         minute: "numeric",
         second: "numeric",
       });
+    }
   }
 
   set title(title) {
@@ -43,6 +45,14 @@ export class Task {
 
   get priority() {
     return this.#priority;
+  }
+
+  set completed(completed) {
+    this.#completed = completed;
+  }
+
+  get completed() {
+    return this.#completed;
   }
 
   get created() {
