@@ -29,7 +29,7 @@
               type="text"
               name=""
               id="input-title"
-              placeholder="Digite aqui"
+              placeholder="Type here"
             />
             <label for="">Title</label>
           </div>
@@ -37,7 +37,7 @@
           <!-- alerta -->
           <div class="alert" id="input-title-alert">
             <i class="fa-solid fa-circle-exclamation"></i>
-            <p>preencha o campo acima</p>
+            <p>fill in the field above</p>
           </div>
 
           <div class="input-box">
@@ -45,7 +45,7 @@
               type="text"
               name=""
               id="input-description"
-              placeholder="Digite aqui"
+              placeholder="Type here"
             />
             <label for="">Description</label>
           </div>
@@ -53,17 +53,17 @@
           <!-- alerta -->
           <div class="alert" id="input-description-alert">
             <i class="fa-solid fa-circle-exclamation"></i>
-            <p>preencha o campo acima</p>
+            <p>fill in the field above</p>
           </div>
         </div>
 
         <!-- prioridades -->
         <div class="priorities-contain">
-          <span>prioridades:</span>
+          <span>priorities:</span>
           <select id="priorities">
-            <option value="LOW">BAIXA</option>
-            <option value="MEDIUM">MÉDIA</option>
-            <option value="HIGH">ALTA</option>
+            <option value="LOW">LOW</option>
+            <option value="MEDIUM">MEDIUM</option>
+            <option value="HIGH">HIGH</option>
           </select>
         </div>
 
@@ -77,13 +77,20 @@
       <div class="tasks-contain">
         <div class="tasks">
           <div class="tasks-empty">
-            <i class="fa-solid fa-cat"></i>
+            <lord-icon
+              src="https://cdn.lordicon.com/pflszboa.json"
+              trigger="loop"
+              delay="2000"
+              colors="primary:#f0f8ff"
+              style="width: 150px; height: 150px"
+            >
+            </lord-icon>
             <p>Sem tasks por aqui...</p>
           </div>
         </div>
       </div>
     </main>
-
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="./js/script.js" type="module"></script>
   </body>
 </html>
