@@ -31,10 +31,28 @@ const addErrorStyleInputs = () => {
   inputDescription.element.classList.add("error");
 };
 
+const showTaskEmpty = () => {
+  const { tasksContain } = tasksContainElements;
+
+  tasksContain.innerHTML = `          
+    <div class="tasks-empty">
+      <lord-icon
+        src="https://cdn.lordicon.com/pflszboa.json"
+        trigger="loop"
+        delay="2000"
+        colors="primary:#f0f8ff"
+        style="width: 150px; height: 150px"
+      >
+      </lord-icon>
+      <p>Sem tasks por aqui...</p>
+    </div>
+  `;
+};
+
 const hideTaskEmpty = () => {
   const { tasksEmpty } = tasksContainElements;
 
-  tasksEmpty.classList.toggle("hide-tasks-empty");
+  tasksEmpty.classList.add("hide-tasks-empty");
 };
 
 const updateInputStatus = (input) => {
@@ -84,23 +102,27 @@ const createTask = (taskData) => {
 
 const getTimeCriationTask = (task) => {};
 
-const createTaskCard = () => {
+const createTaskCards = () => {
   const { tasksContain } = tasksContainElements;
   const allTasks = TaskRepository.getAllTasks();
+
+  console.log(allTasks);
   /*   
   const timeOfCreation = getTimeCriationTask(task);
   console.log(timeOfCreation);
   */
-  tasksContain.innerHTML = "";
 
   if (allTasks !== null) {
+    hideTaskEmpty();
+    tasksContain.innerHTML = "";
+
     allTasks.forEach((task) => {
       tasksContain.innerHTML += `
         <div class="task">
             <div class="header-task">
                 <div class="about-task">
                   <span id="title">${task.title}</span>
-                  <span id="time-of-creation">1 day ago</span>
+                  <span id="time-of-creation">1 day ago ${task.created}</span>
                 </div>
                 <span id="priority">${task.priority}</span>
             </div>
@@ -123,6 +145,9 @@ const createTaskCard = () => {
 
       addListenerButtonsAction();
     });
+  } else {
+    tasksContain.innerHTML = "";
+    showTaskEmpty();
   }
 };
 
@@ -138,7 +163,7 @@ const addTask = () => {
 
     TaskRepository.saveTask(task);
 
-    createTaskCard();
+    createTaskCards();
   } else {
     addErrorStyleInputs();
     showAlert();
@@ -175,7 +200,7 @@ const addListenerButtonsAction = () => {
         case "delete":
           const task = createTaskOfDomElement(clickedTask);
           TaskRepository.deleteTask(task);
-          createTaskCard();
+          createTaskCards();
           break;
 
         case "completed":
@@ -198,7 +223,8 @@ const addListenerElements = () => {
   btnAddTask.addEventListener("click", () => {
     addTask();
   });
-  hideTaskEmpty();
+
+  createTaskCards();
 };
 
 window.onload = addListenerElements;
