@@ -6,7 +6,7 @@ export class TaskRepository {
    * @returns retorna nulo, caso o localStorage esteja vazio
    */
   static getAllTasks() {
-    const keys = Object.keys(localStorage);
+    const keys = Object.keys(localStorage).sort().reverse();
     const allTasks = [];
 
     if (keys.length === 0) return null;
@@ -27,12 +27,16 @@ export class TaskRepository {
 
   static #getNextId() {
     // Obter todas as chaves do localStorage
-    const keys = Object.keys(localStorage);
+    const keys = Object.keys(localStorage).sort();
+
+    console.log(keys);
 
     if (keys.length === 0) return 1;
 
     const lastId = Number(keys[keys.length - 1]);
+    console.log(lastId);
     const newId = lastId + 1;
+    console.log(newId);
 
     return newId;
   }
