@@ -5,13 +5,15 @@ export class Task {
   #created;
   #completed;
 
-  constructor(title, description, priority, created = false) {
+  constructor(title, description, priority, created = "") {
     this.#title = title;
     this.#description = description;
     this.#priority = priority;
     this.#completed = false;
 
     if (created) {
+      this.#created = created;
+    } else {
       this.#created = new Date().toLocaleString("pt-br", {
         year: "numeric",
         month: "2-digit",
