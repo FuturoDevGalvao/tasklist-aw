@@ -16,12 +16,26 @@
     ></script>
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/edit-task-contain.css" />
+    <link rel="stylesheet" href="./css/filter-tasks.css" />
     <link rel="stylesheet" href="./css/tasks-contain.css" />
     <title>Document</title>
   </head>
   <body>
     <main>
+      <div class="filter-tasks">
+        <h1>Filters</h1>
+        <div class="filters">
+          <ul>
+            <li>checked</li>
+            <li>unchecked</li>
+          </ul>
+        </div>
+      </div>
       <div class="edit-task-contain">
+        <i
+          class="fa-solid fa-circle-xmark"
+          id="btn-close-edit-task-contain"
+        ></i>
         <!-- inputs -->
         <div class="inputs-contain">
           <div class="input-box">
@@ -59,7 +73,7 @@
 
         <!-- prioridades -->
         <div class="priorities-contain">
-          <span>priorities:</span>
+          <span>priority:</span>
           <select id="priorities">
             <option value="LOW">LOW</option>
             <option value="MEDIUM">MEDIUM</option>
@@ -75,6 +89,13 @@
 
       <!-- tasks -->
       <div class="tasks-contain">
+        <div class="header-tasks-contain">
+          <h1>Tasks</h1>
+          <button id="btn-new-task">
+            new task
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </div>
         <div class="tasks">
           <div class="tasks-empty">
             <lord-icon

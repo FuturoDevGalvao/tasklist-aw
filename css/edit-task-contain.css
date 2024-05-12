@@ -1,13 +1,40 @@
 @import url("variables.css");
 
 .edit-task-contain {
+  position: relative;
   width: 40%;
-  display: flex;
+  display: none; /* flex */
   flex-direction: column;
   justify-content: center;
   gap: 20px;
   padding: 30px;
-  border-right: 3px solid #ccc;
+  position: absolute;
+  top: 6.5%;
+  left: 25%;
+  z-index: 1;
+  background-color: var(--input);
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
+
+#btn-close-edit-task-contain {
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: -10px;
+  right: -10px;
+  font-size: 2rem;
+  color: red;
+  border-radius: 50%;
+  background-color: var(--font);
+  cursor: pointer;
+}
+#btn-close-edit-task-contain:hover {
+  transform: rotate(360deg);
+  transition: 0.3s;
 }
 
 .inputs-contain {
@@ -34,7 +61,7 @@
   padding-right: 10px;
   width: 95%;
   border: none;
-  background-color: var(--input);
+  background-color: var(--bg);
   color: var(--font);
   outline: none;
   border: 2px solid transparent;
@@ -121,7 +148,7 @@
 
 #priorities {
   flex: 1;
-  background-color: var(--input);
+  background-color: var(--bg);
   border: none;
   color: var(--font);
   height: 100%;

@@ -18,8 +18,10 @@ body {
 }
 
 main {
-  width: 70%;
+  position: relative;
+  width: 60%;
   display: flex;
+  gap: 20px;
   /*   border: 1px solid red;
  */
 }

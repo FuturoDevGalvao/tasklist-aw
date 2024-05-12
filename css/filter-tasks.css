@@ -1,0 +1,41 @@
+@import url("variables.css");
+
+.filter-tasks {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px 20px;
+  background-color: var(--input);
+  border-radius: 8px;
+}
+
+.filters {
+  /*   border: 1px solid yellow;
+ */
+}
+
+.filters ul {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /*   border: 1px solid green;
+ */
+}
+
+.filters ul li {
+  width: 93.5%;
+  padding: 10px;
+  cursor: pointer;
+  background-color: var(--bg);
+  transition: 0.3s;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.filters ul li:hover {
+  background-color: var(--input-hover);
+  transition: 0.3s;
+}
