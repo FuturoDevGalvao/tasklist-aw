@@ -22,6 +22,13 @@ const hideEditTaskContain = () => {
   editTasksContain.style.pointerEvents = "none";
 };
 
+const clearFieldsEditTask = () => {
+  const { inputs, priorities } = editTaskContainElements;
+
+  Object.values(inputs).forEach((input) => (input.element.value = ""));
+  priorities.value = "LOW";
+};
+
 const showAlert = () => {
   const inputs = Object.values(editTaskContainElements.inputs);
 
@@ -116,8 +123,8 @@ const createTask = (taskData) => {
 
 const getTimeCriationTask = (task) => {};
 
-const randomBg = () => {
-  const colors = [
+const randomBg = (task) => {
+  let colors = [
     "#FF7511",
     "#FFA800",
     "#19DB7E",
@@ -126,16 +133,23 @@ const randomBg = () => {
     "#00D4C8",
   ];
 
-  const randomIndex = Math.floor(Math.random() * colors.length);
+  const allTasks = TaskRepository.getAllTasks();
+  let lastColor;
 
-  return colors[randomIndex];
+  if (allTasks && allTasks.length > 0) {
+    lastColor = allTasks[allTasks.length - 1].color;
+
+    colors = colors.filter((c) => c !== lastColor);
+  }
+
+  const randomIndex = Math.floor(Math.random() * colors.length);
+  task.color = colors[randomIndex];
 };
 
 const createTaskCards = () => {
   const { tasksContain } = tasksContainElements;
   const allTasks = TaskRepository.getAllTasks();
 
-  console.log(allTasks);
   /*   
   const timeOfCreation = getTimeCriationTask(task);
   console.log(timeOfCreation);
@@ -147,7 +161,7 @@ const createTaskCards = () => {
 
     allTasks.forEach((task) => {
       tasksContain.innerHTML += `
-        <div class="task">
+        <div class="task" style="background-color: ${task.color}">
             <div class="header-task">
                 <div class="about-task">
                   <span id="title">${task.title}</span>
@@ -172,8 +186,6 @@ const createTaskCards = () => {
         </div>
         `;
 
-      tasksContain.style.backgroundColor = randomBg();
-
       addListenerButtonsAction();
     });
   } else {
@@ -192,10 +204,12 @@ const addTask = () => {
 
     const task = createTask(taskData);
 
+    randomBg(task);
     TaskRepository.saveTask(task);
 
     createTaskCards();
     hideEditTaskContain();
+    clearFieldsEditTask();
   } else {
     addErrorStyleInputs();
     showAlert();
