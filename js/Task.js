@@ -78,12 +78,13 @@ export class Task {
       description: this.#description,
       priority: this.#priority,
       created: this.#created,
+      color: this.#color,
     };
   }
 
   static fromJSON(json) {
-    const { title, description, priority, created } = json;
+    const { title, description, priority, created, color } = json;
 
-    return new Task(title, description, priority, created);
+    return new Task(title, description, priority, created, color);
   }
 }
