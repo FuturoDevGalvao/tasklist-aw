@@ -8,6 +8,7 @@
   padding: 30px 20px;
   background-color: var(--input);
   border-radius: 8px;
+  border: 3px solid #000;
 }
 
 .filters {
@@ -33,6 +34,7 @@
   transition: 0.3s;
   border-radius: 5px;
   font-weight: 500;
+  border: 3px solid #000;
 }
 
 .filters ul li:hover {
