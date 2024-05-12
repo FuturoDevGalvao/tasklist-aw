@@ -6,7 +6,7 @@ export class Task {
   #completed;
   #color;
 
-  constructor(title, description, priority, created = "") {
+  constructor(title, description, priority, created = "", color = "") {
     this.#title = title;
     this.#description = description;
     this.#priority = priority;
@@ -24,6 +24,8 @@ export class Task {
         second: "numeric",
       });
     }
+
+    if (color) this.#color = color;
   }
 
   set title(title) {
