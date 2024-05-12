@@ -4,6 +4,7 @@ export class Task {
   #priority;
   #created;
   #completed;
+  #color;
 
   constructor(title, description, priority, created = "") {
     this.#title = title;
@@ -59,6 +60,14 @@ export class Task {
 
   get created() {
     return this.#created;
+  }
+
+  set color(color) {
+    this.#color = color;
+  }
+
+  get color() {
+    return this.#color;
   }
 
   toJSON() {
