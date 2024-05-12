@@ -8,6 +8,20 @@ import {
 import { Task } from "./Task.js";
 import { TaskRepository } from "./TaskRepository.js";
 
+const showEditTaskContain = () => {
+  const { editTasksContain } = editTaskContainElements;
+
+  editTasksContain.style.opacity = "1";
+  editTasksContain.style.pointerEvents = "auto";
+};
+
+const hideEditTaskContain = () => {
+  const { editTasksContain } = editTaskContainElements;
+
+  editTasksContain.style.opacity = "0";
+  editTasksContain.style.pointerEvents = "none";
+};
+
 const showAlert = () => {
   const inputs = Object.values(editTaskContainElements.inputs);
 
@@ -102,6 +116,21 @@ const createTask = (taskData) => {
 
 const getTimeCriationTask = (task) => {};
 
+const randomBg = () => {
+  const colors = [
+    "#FF7511",
+    "#FFA800",
+    "#19DB7E",
+    "#FF4BA6",
+    "#6457F9",
+    "#00D4C8",
+  ];
+
+  const randomIndex = Math.floor(Math.random() * colors.length);
+
+  return colors[randomIndex];
+};
+
 const createTaskCards = () => {
   const { tasksContain } = tasksContainElements;
   const allTasks = TaskRepository.getAllTasks();
@@ -143,6 +172,8 @@ const createTaskCards = () => {
         </div>
         `;
 
+      tasksContain.style.backgroundColor = randomBg();
+
       addListenerButtonsAction();
     });
   } else {
@@ -164,6 +195,7 @@ const addTask = () => {
     TaskRepository.saveTask(task);
 
     createTaskCards();
+    hideEditTaskContain();
   } else {
     addErrorStyleInputs();
     showAlert();
@@ -211,8 +243,14 @@ const addListenerButtonsAction = () => {
 };
 
 const addListenerElements = () => {
+  const { btnNewTask } = tasksContainElements;
   const { btnAddTask } = editTaskContainElements;
   const inputs = Object.values(editTaskContainElements.inputs);
+  const { btnCloseEditTaskContain } = editTaskContainElements;
+
+  btnNewTask.addEventListener("click", showEditTaskContain);
+
+  btnCloseEditTaskContain.addEventListener("click", hideEditTaskContain);
 
   inputs.forEach((input) =>
     input.element.addEventListener("input", (event) => {
