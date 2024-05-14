@@ -1,4 +1,5 @@
 export class Task {
+  #id;
   #title;
   #description;
   #priority;
@@ -6,7 +7,9 @@ export class Task {
   #completed;
   #color;
 
-  constructor(title, description, priority, created = "", color = "") {
+  constructor(id = 0, title, description, priority, created = "", color = "") {
+    if (id) this.#id = id;
+
     this.#title = title;
     this.#description = description;
     this.#priority = priority;
@@ -26,6 +29,14 @@ export class Task {
     }
 
     if (color) this.#color = color;
+  }
+
+  set id(id) {
+    this.#id = id;
+  }
+
+  get id() {
+    return this.#id;
   }
 
   set title(title) {
@@ -83,8 +94,8 @@ export class Task {
   }
 
   static fromJSON(json) {
-    const { title, description, priority, created, color } = json;
+    const { id, title, description, priority, created, color } = json;
 
-    return new Task(title, description, priority, created, color);
+    return new Task(id, title, description, priority, created, color);
   }
 }
