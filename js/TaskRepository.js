@@ -11,51 +11,57 @@ export class TaskRepository {
 
     if (keys.length === 0) return null;
 
-    keys.forEach((key) => allTasks.push(localStorage.getItem(key)));
+    keys.forEach((key) => allTasks.push(JSON.parse(localStorage.getItem(key))));
 
-    return allTasks
-      .map((task) => JSON.parse(task))
-      .map((task) => Task.fromJSON(task));
+    for (let i = 0; i < keys.length; i++) {
+      let key = keys[i];
+      allTasks[i].id = key;
+    }
+
+    return allTasks.map((task) => Task.fromJSON(task));
   }
 
   // Método para buscar uma task pelo ID no banco de dados
   static getTaskById(taskId) {
-    // Implemente a lógica para buscar uma task pelo ID no banco de dados
-    // Retorne a task encontrada ou null se não encontrada
-    return null; // Exemplo: retornando null por enquanto
+    const task = JSON.parse(localStorage.getItem(taskId));
+    task.id = taskId;
+    return Task.fromJSON(task);
   }
 
   static #getNextId() {
     // Obter todas as chaves do localStorage
     const keys = Object.keys(localStorage).sort();
 
-    console.log(keys);
-
     if (keys.length === 0) return 1;
 
     const lastId = Number(keys[keys.length - 1]);
-    console.log(lastId);
     const newId = lastId + 1;
-    console.log(newId);
 
     return newId;
   }
 
   // Método para salvar uma nova task no banco de dados
   static saveTask(task) {
-    const taskFormatedToJSON = JSON.stringify(task);
+    console.log(task);
+    //const taskFormatedToJSON = JSON.stringify(task);
 
-    localStorage.setItem(this.#getNextId(), taskFormatedToJSON);
+    if (task.id === undefined) {
+      localStorage.setItem(this.#getNextId(), JSON.stringify(task));
+    } else {
+      this.updateTask(task);
+    }
   }
 
+  // AINDA IMPLEMENTANDO
   // Método para atualizar uma task existente no banco de dados
   static updateTask(task) {
-    // Implemente a lógica para atualizar uma task existente no banco de dados
-    // Retorne true se a atualização foi bem-sucedida ou false se ocorreu algum erro
-    return true; // Exemplo: retornando true por enquanto
+    console.log(task);
+    const id = task.id;
+    delete task.id;
+    localStorage.setItem(id, JSON.stringify(task));
   }
 
-  static #getIDTask(taskToSearch) {
+  static getIDTask(taskToSearch) {
     const keys = Object.keys(localStorage);
 
     for (const key of keys) {
@@ -71,6 +77,6 @@ export class TaskRepository {
   }
   // Método para deletar uma task pelo ID no banco de dados
   static deleteTask(task) {
-    localStorage.removeItem(this.#getIDTask(task));
+    localStorage.removeItem(this.getIDTask(task));
   }
 }
