@@ -4,5 +4,7 @@
   --input-hover: #32353a;
   --font: #f0f8ff;
   --font-sec: #ccc;
+  --font-card: #000;
+  --font-card-sec: #000000cb;
   --button: rgb(0, 55, 255);
 }
