@@ -45,13 +45,6 @@ const hideAlert = (inputElement) => {
   input.alert.classList.remove("show-alert");
 };
 
-const addErrorStyleInputs = () => {
-  const { inputTitle, inputDescription } = editTaskContainElements.inputs;
-
-  inputTitle.element.classList.add("error");
-  inputDescription.element.classList.add("error");
-};
-
 const showTaskEmpty = () => {
   const { tasksContain } = tasksContainElements;
 
@@ -104,21 +97,32 @@ const getTaskData = () => {
 };
 
 const createTaskOfDomElement = (domElement) => {
+  const id = domElement.querySelector("#id");
   const title = domElement.querySelector("#title");
   const description = domElement.querySelector("#description");
   const priority = document.querySelector("#priority");
 
   return new Task(
+    id.textContent,
     title.textContent,
     description.textContent,
-    priority.textContent
+    priority.textContent,
+    "",
+    ""
   );
 };
 
 const createTask = (taskData) => {
   const { inputTitleValue, inputDescriptionValue, priorityValue } = taskData;
 
-  return new Task(inputTitleValue, inputDescriptionValue, priorityValue);
+  return new Task(
+    0,
+    inputTitleValue,
+    inputDescriptionValue,
+    priorityValue,
+    "",
+    ""
+  );
 };
 
 const getTimeCriationTask = (task) => {};
@@ -138,7 +142,6 @@ const randomBg = (task) => {
 
   if (allTasks && allTasks.length > 0) {
     lastColor = allTasks[allTasks.length - 1].color;
-
     colors = colors.filter((c) => c !== lastColor);
   }
 
@@ -162,6 +165,7 @@ const createTaskCards = () => {
     allTasks.forEach((task) => {
       tasksContain.innerHTML += `
         <div class="task" style="background-color: ${task.color}">
+            <span id="id">${task.id}</span>
             <div class="header-task">
                 <div class="about-task">
                   <span id="title">${task.title}</span>
@@ -173,9 +177,6 @@ const createTaskCards = () => {
                 <span id="description">${task.description}</span>
             </div>
             <div class="actions">
-                <button class="btn-action" id="edit">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </button>
                 <button class="btn-action" id="delete">
                     <i class="fa-solid fa-trash-can"></i>
                 </button>
@@ -203,17 +204,47 @@ const addTask = () => {
     const taskData = getTaskData();
 
     const task = createTask(taskData);
+    console.log(task);
 
-    randomBg(task);
+    if (task.id === undefined) randomBg(task);
+
     TaskRepository.saveTask(task);
 
     createTaskCards();
     hideEditTaskContain();
     clearFieldsEditTask();
   } else {
-    addErrorStyleInputs();
     showAlert();
   }
+};
+
+// recebe a instancia errada
+const editTask = (task) => {
+  const isValidated = validateTask();
+
+  if (isValidated) {
+    const taskData = getTaskData();
+
+    task.title = taskData.inputTitleValue;
+    task.description = taskData.inputDescriptionValue;
+    task.priority = taskData.priorityValue;
+
+    console.log(task);
+
+    TaskRepository.saveTask(task);
+
+    createTaskCards();
+    hideEditTaskContain();
+    clearFieldsEditTask();
+    addDefaultListerBtnAdd();
+  } else {
+    showAlert();
+  }
+};
+
+const addDefaultListerBtnAdd = () => {
+  const { btnAddTask } = editTaskContainElements;
+  btnAddTask.addEventListener("click", addTask);
 };
 
 const getTaskDomElement = () => {
@@ -234,22 +265,25 @@ const addListenerButtonsAction = () => {
 
       // Capturar a task pai (a div com a classe "task")
       const clickedTask = event.currentTarget;
-
+      console.log(clickedTask);
+      /* 
       console.log(`Botão com ID "${buttonId}" clicado na task:`);
       console.log(targetButton);
       console.log(clickedTask);
+ */
+      let task = createTaskOfDomElement(clickedTask);
+      console.log(task);
 
+      // edita o mesmo depois de uma peimeira edição
+      // erro
       switch (buttonId) {
-        case "edit":
-          break;
-
         case "delete":
-          const task = createTaskOfDomElement(clickedTask);
           TaskRepository.deleteTask(task);
           createTaskCards();
           break;
 
         case "completed":
+          TaskRepository.updateTask(task, { completed: true });
           break;
       }
     });
@@ -258,7 +292,6 @@ const addListenerButtonsAction = () => {
 
 const addListenerElements = () => {
   const { btnNewTask } = tasksContainElements;
-  const { btnAddTask } = editTaskContainElements;
   const inputs = Object.values(editTaskContainElements.inputs);
   const { btnCloseEditTaskContain } = editTaskContainElements;
 
@@ -272,10 +305,7 @@ const addListenerElements = () => {
     })
   );
 
-  btnAddTask.addEventListener("click", () => {
-    addTask();
-  });
-
+  addDefaultListerBtnAdd();
   createTaskCards();
 };
 
