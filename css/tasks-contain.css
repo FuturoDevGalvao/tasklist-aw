@@ -6,6 +6,8 @@
   background-color: var(--input);
   border-radius: 8px;
   border: 3px solid #000;
+  animation: backInUp;
+  animation-duration: 1s;
 }
 
 .header-tasks-contain {
@@ -70,6 +72,8 @@
   color: var(--font-card);
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 1), 8px 8px 0 0 rgba(0, 0, 0, 1);
   transition: width 0.3s;
+  animation: flipInX;
+  animation-duration: 0.5s;
 }
 
 .header-task {
