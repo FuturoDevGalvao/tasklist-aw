@@ -11,6 +11,41 @@
   border: 3px solid #000;
 }
 
+.filter-tasks h1 {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.show-filter-tasks-contain {
+  left: 0% !important;
+}
+
+#btn-close-filter-task-contain {
+  width: 45px;
+  height: 40px;
+  position: absolute;
+  right: -66.49px;
+  color: var(--font-sec);
+  background-color: var(--input);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  cursor: pointer;
+  z-index: 3;
+  border-top: 3px solid #000;
+  border-right: 3px solid #000;
+  border-bottom: 3px solid #000;
+}
+
+#btn-close-filter-task-contain:hover {
+  color: var(--font);
+}
+
 .filters {
   display: flex;
   flex-direction: column;
@@ -27,8 +62,6 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  /*   border: 1px solid green;
- */
 }
 
 .filters ul li {
@@ -50,4 +83,20 @@
 
 .filter-selected {
   border-color: var(--button) !important;
+}
+
+@media screen and (max-width: 750px) {
+  .filter-tasks {
+    width: 60%;
+    position: absolute;
+    left: -71%;
+    top: 0;
+    border-radius: 0px;
+    z-index: 3;
+    height: 100vh;
+    border: none;
+    border-right: 3px solid #000;
+    transition: 0.3s;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+  }
 }

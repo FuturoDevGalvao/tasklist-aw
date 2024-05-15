@@ -9,8 +9,6 @@
 }
 
 .header-tasks-contain {
-  /*   border: 1px solid red;
- */
   padding: 20px;
   display: flex;
   align-items: center;
@@ -27,7 +25,12 @@
   cursor: pointer;
   background-color: var(--button);
   color: var(--font);
+  transition: 0.3s;
   border: 3px solid #000;
+}
+
+#btn-new-task:hover {
+  background-color: var(--button-hover);
 }
 
 .tasks {
@@ -36,9 +39,7 @@
   align-items: center;
   gap: 30px;
   height: 400px;
-  overflow-y: auto; /* Habilitar rolagem vertical quando necessário */
-  /*   border: 1px solid #ccc;
- */
+  overflow-y: auto;
   padding: 30px 20px;
 }
 
@@ -77,9 +78,6 @@
   align-items: center;
   justify-content: space-evenly;
   padding: 20px 20px 10px 20px;
-
-  /*   border: 1px dashed black;
- */
   overflow: hidden;
 }
 
@@ -87,8 +85,6 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  /*   background-color: brown;
- */
 }
 
 #title {
@@ -127,8 +123,6 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  /*   border: 1px dashed hotpink;
- */
   padding: 10px 20px 20px 20px;
 }
 
@@ -161,14 +155,17 @@
   background-color: red;
   color: var(--input);
 }
+
 #delete:hover {
   color: var(--font);
   background-color: red;
 }
+
 #completed {
   background-color: green;
   color: var(--input);
 }
+
 #completed:hover {
   color: var(--font);
   background-color: green;
@@ -182,4 +179,10 @@
   background-color: var(--input) !important;
   width: 90%;
   transition: width 0.3s;
+}
+
+@media screen and (max-width: 750px) {
+  .task-completed {
+    width: 95%;
+  }
 }

@@ -6,5 +6,6 @@
   --font-sec: #ccc;
   --font-card: #000;
   --font-card-sec: #000000cb;
-  --button: rgb(0, 55, 255);
+  --button: #0037ff;
+  --button-hover: #0532d2;
 }

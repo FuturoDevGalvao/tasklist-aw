@@ -26,5 +26,7 @@ export const tasksContainElements = {
 };
 
 export const filterTasksElements = {
+  filterTasksContain: document.querySelector(".filter-tasks"),
   filters: document.querySelectorAll(".filter"),
+  btnCloseFilterTask: document.getElementById("btn-close-filter-task-contain"),
 };

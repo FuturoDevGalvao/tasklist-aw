@@ -9,7 +9,28 @@ import {
 import { Task } from "./Task.js";
 import { TaskRepository } from "./TaskRepository.js";
 
-let added = false;
+const showFilterTaskContain = () => {
+  const { filterTasksContain, btnCloseFilterTask } = filterTasksElements;
+
+  if (btnCloseFilterTask.classList.contains("fa-xmark")) {
+    btnCloseFilterTask.classList.remove("fa-xmark");
+    btnCloseFilterTask.classList.add("fa-filter");
+  } else {
+    btnCloseFilterTask.classList.remove("fa-filter");
+    btnCloseFilterTask.classList.add("fa-xmark");
+  }
+
+  filterTasksContain.classList.toggle("show-filter-tasks-contain");
+};
+
+const showBtnCloseFilterTask = () => {
+  const { btnCloseFilterTask } = filterTasksElements;
+
+  if (window.innerWidth <= 750) {
+    btnCloseFilterTask.style.opacity = "1";
+    btnCloseFilterTask.style.pointerEvents = "auto";
+  }
+};
 
 const showEditTaskContain = () => {
   const { editTasksContain } = editTaskContainElements;
@@ -219,7 +240,6 @@ const addTask = () => {
 
     randomBg(task);
     TaskRepository.saveTask(task);
-    added = true;
 
     createTaskCards();
     hideEditTaskContain();
@@ -312,11 +332,14 @@ const applyFilter = (filterSelected, apply) => {
 };
 
 const addListenerElements = () => {
+  const { btnCloseFilterTask } = filterTasksElements;
   const { btnNewTask } = tasksContainElements;
   const inputs = Object.values(editTaskContainElements.inputs);
   const { btnCloseEditTaskContain } = editTaskContainElements;
   const { filters } = filterTasksElements;
   const { btnAddTask } = editTaskContainElements;
+
+  btnCloseFilterTask.addEventListener("click", showFilterTaskContain);
 
   btnAddTask.addEventListener("click", addTask);
 
@@ -326,8 +349,7 @@ const addListenerElements = () => {
 
   filters.forEach((filter) =>
     filter.addEventListener("click", (event) => {
-      let apply = false;
-      if (added) apply = addFilterSelectedStyle(event.target);
+      const apply = addFilterSelectedStyle(event.target);
       applyFilter(event.target.textContent, apply);
     })
   );
@@ -338,6 +360,7 @@ const addListenerElements = () => {
     })
   );
 
+  showBtnCloseFilterTask();
   createTaskCards();
 };
 
