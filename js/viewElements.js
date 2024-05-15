@@ -24,3 +24,7 @@ export const tasksContainElements = {
   tasksEmpty: document.querySelector(".tasks-empty"),
   btnNewTask: document.getElementById("btn-new-task"),
 };
+
+export const filterTasksElements = {
+  filters: document.querySelectorAll(".filter"),
+};
