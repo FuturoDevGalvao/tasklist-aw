@@ -121,11 +121,23 @@ const createTask = (taskData) => {
     inputDescriptionValue,
     priorityValue,
     "",
-    ""
+    "",
+    false
   );
 };
 
-const getTimeCriationTask = (task) => {};
+const getTimeCriationTask = (task) => {
+  console.log(task);
+  const today = new Date();
+  const dateCreationTask = new Date(task.created);
+  const diferencaEmMilisegundos = today.getTime() - dateCreationTask.getTime();
+  const diferencaEmDias = diferencaEmMilisegundos / (1000 * 60 * 60 * 24);
+  const diferencaArredondada = Math.round(diferencaEmDias);
+
+  console.log(diferencaArredondada);
+
+  return diferencaArredondada - 1;
+};
 
 const randomBg = (task) => {
   let colors = [
@@ -152,24 +164,30 @@ const randomBg = (task) => {
 const createTaskCards = () => {
   const { tasksContain } = tasksContainElements;
   const allTasks = TaskRepository.getAllTasks();
-
-  /*   
-  const timeOfCreation = getTimeCriationTask(task);
-  console.log(timeOfCreation);
-  */
+  const classTaskCompleted = "task-completed";
 
   if (allTasks !== null) {
     hideTaskEmpty();
     tasksContain.innerHTML = "";
 
     allTasks.forEach((task) => {
+      let timeOfCreation = getTimeCriationTask(task);
+
+      console.log(timeOfCreation);
+
       tasksContain.innerHTML += `
-        <div class="task" style="background-color: ${task.color}">
+        <div class="task ${
+          task.completed ? classTaskCompleted : ""
+        }" style="background-color: ${task.color}">
             <span id="id">${task.id}</span>
             <div class="header-task">
                 <div class="about-task">
                   <span id="title">${task.title}</span>
-                  <span id="time-of-creation">1 day ago ${task.created}</span>
+                  <span id="time-of-creation">added ${
+                    timeOfCreation <= 1
+                      ? "today"
+                      : "there is " + String(timeOfCreation) + " days"
+                  }</span>
                 </div>
                 <span id="priority">${task.priority}</span>
             </div>
@@ -218,30 +236,6 @@ const addTask = () => {
   }
 };
 
-// recebe a instancia errada
-const editTask = (task) => {
-  const isValidated = validateTask();
-
-  if (isValidated) {
-    const taskData = getTaskData();
-
-    task.title = taskData.inputTitleValue;
-    task.description = taskData.inputDescriptionValue;
-    task.priority = taskData.priorityValue;
-
-    console.log(task);
-
-    TaskRepository.saveTask(task);
-
-    createTaskCards();
-    hideEditTaskContain();
-    clearFieldsEditTask();
-    addDefaultListerBtnAdd();
-  } else {
-    showAlert();
-  }
-};
-
 const addDefaultListerBtnAdd = () => {
   const { btnAddTask } = editTaskContainElements;
   btnAddTask.addEventListener("click", addTask);
@@ -283,7 +277,16 @@ const addListenerButtonsAction = () => {
           break;
 
         case "completed":
-          TaskRepository.updateTask(task, { completed: true });
+          const taskCompleted = TaskRepository.getTaskById(task.id);
+
+          if (taskCompleted.completed) {
+            taskCompleted.completed = false;
+          } else {
+            taskCompleted.completed = true;
+          }
+
+          TaskRepository.updateTask(taskCompleted);
+          createTaskCards();
           break;
       }
     });
