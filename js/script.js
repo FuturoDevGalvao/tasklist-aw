@@ -3,10 +3,13 @@
 import {
   editTaskContainElements,
   tasksContainElements,
+  filterTasksElements,
 } from "./viewElements.js";
 
 import { Task } from "./Task.js";
 import { TaskRepository } from "./TaskRepository.js";
+
+let added = false;
 
 const showEditTaskContain = () => {
   const { editTasksContain } = editTaskContainElements;
@@ -106,9 +109,7 @@ const createTaskOfDomElement = (domElement) => {
     id.textContent,
     title.textContent,
     description.textContent,
-    priority.textContent,
-    "",
-    ""
+    priority.textContent
   );
 };
 
@@ -127,14 +128,11 @@ const createTask = (taskData) => {
 };
 
 const getTimeCriationTask = (task) => {
-  console.log(task);
   const today = new Date();
   const dateCreationTask = new Date(task.created);
   const diferencaEmMilisegundos = today.getTime() - dateCreationTask.getTime();
   const diferencaEmDias = diferencaEmMilisegundos / (1000 * 60 * 60 * 24);
   const diferencaArredondada = Math.round(diferencaEmDias);
-
-  console.log(diferencaArredondada);
 
   return diferencaArredondada - 1;
 };
@@ -161,19 +159,19 @@ const randomBg = (task) => {
   task.color = colors[randomIndex];
 };
 
-const createTaskCards = () => {
+const createTaskCards = (tasksFiltered = null) => {
   const { tasksContain } = tasksContainElements;
   const allTasks = TaskRepository.getAllTasks();
   const classTaskCompleted = "task-completed";
 
-  if (allTasks !== null) {
+  const tasksForOperation = tasksFiltered ? tasksFiltered : allTasks;
+
+  if (tasksForOperation !== null && tasksForOperation.length > 0) {
     hideTaskEmpty();
     tasksContain.innerHTML = "";
 
-    allTasks.forEach((task) => {
+    tasksForOperation.forEach((task) => {
       let timeOfCreation = getTimeCriationTask(task);
-
-      console.log(timeOfCreation);
 
       tasksContain.innerHTML += `
         <div class="task ${
@@ -216,17 +214,12 @@ const createTaskCards = () => {
 const addTask = () => {
   const isValidated = validateTask();
 
-  console.log(isValidated);
-
   if (isValidated) {
-    const taskData = getTaskData();
+    const task = createTask(getTaskData());
 
-    const task = createTask(taskData);
-    console.log(task);
-
-    if (task.id === undefined) randomBg(task);
-
+    randomBg(task);
     TaskRepository.saveTask(task);
+    added = true;
 
     createTaskCards();
     hideEditTaskContain();
@@ -236,10 +229,7 @@ const addTask = () => {
   }
 };
 
-const addDefaultListerBtnAdd = () => {
-  const { btnAddTask } = editTaskContainElements;
-  btnAddTask.addEventListener("click", addTask);
-};
+const addDefaultListerBtnAdd = () => {};
 
 const getTaskDomElement = () => {
   return {
@@ -253,23 +243,14 @@ const addListenerButtonsAction = () => {
   tasks.forEach((task) => {
     task.addEventListener("click", (event) => {
       const targetButton = event.target.closest("button");
+
       if (!targetButton) return; // Saia se o clique não foi em um botão
 
       const buttonId = targetButton.id;
 
-      // Capturar a task pai (a div com a classe "task")
       const clickedTask = event.currentTarget;
-      console.log(clickedTask);
-      /* 
-      console.log(`Botão com ID "${buttonId}" clicado na task:`);
-      console.log(targetButton);
-      console.log(clickedTask);
- */
       let task = createTaskOfDomElement(clickedTask);
-      console.log(task);
 
-      // edita o mesmo depois de uma peimeira edição
-      // erro
       switch (buttonId) {
         case "delete":
           TaskRepository.deleteTask(task);
@@ -286,6 +267,7 @@ const addListenerButtonsAction = () => {
           }
 
           TaskRepository.updateTask(taskCompleted);
+          removeFilterSelectedStyle();
           createTaskCards();
           break;
       }
@@ -293,14 +275,62 @@ const addListenerButtonsAction = () => {
   });
 };
 
+const removeFilterSelectedStyle = () => {
+  const { filters } = filterTasksElements;
+  filters.forEach((filter) => filter.classList.remove("filter-selected"));
+};
+
+const addFilterSelectedStyle = (filter) => {
+  if (filter.classList.contains("filter-selected")) {
+    //TIROU O FILTRO
+    filter.classList.remove("filter-selected");
+    return false;
+  } else {
+    //APLICOU O FILTRO
+    removeFilterSelectedStyle();
+    filter.classList.add("filter-selected");
+    return true;
+  }
+};
+
+const applyFilter = (filterSelected, apply) => {
+  const allTasks = TaskRepository.getAllTasks();
+
+  if (allTasks && apply) {
+    const allFilters = {
+      checked: () => allTasks.filter((task) => task.completed),
+      unchecked: () => allTasks.filter((task) => !task.completed),
+      low: () => allTasks.filter((task) => task.priority === "LOW"),
+      medium: () => allTasks.filter((task) => task.priority === "MEDIUM"),
+      high: () => allTasks.filter((task) => task.priority === "HIGH"),
+    };
+
+    createTaskCards(allFilters[filterSelected]());
+  } else {
+    createTaskCards();
+  }
+};
+
 const addListenerElements = () => {
   const { btnNewTask } = tasksContainElements;
   const inputs = Object.values(editTaskContainElements.inputs);
   const { btnCloseEditTaskContain } = editTaskContainElements;
+  const { filters } = filterTasksElements;
+  const { btnAddTask } = editTaskContainElements;
+
+  btnAddTask.addEventListener("click", addTask);
 
   btnNewTask.addEventListener("click", showEditTaskContain);
 
   btnCloseEditTaskContain.addEventListener("click", hideEditTaskContain);
+
+  filters.forEach((filter) =>
+    filter.addEventListener("click", (event) => {
+      let apply = false;
+      if (added) apply = addFilterSelectedStyle(event.target);
+      applyFilter(event.target.textContent, apply);
+    })
+  );
 
   inputs.forEach((input) =>
     input.element.addEventListener("input", (event) => {
@@ -308,7 +338,6 @@ const addListenerElements = () => {
     })
   );
 
-  addDefaultListerBtnAdd();
   createTaskCards();
 };
 
