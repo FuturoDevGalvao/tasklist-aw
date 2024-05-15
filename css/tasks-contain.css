@@ -68,6 +68,7 @@
   border-radius: 2px;
   color: var(--font-card);
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 1), 8px 8px 0 0 rgba(0, 0, 0, 1);
+  transition: width 0.3s;
 }
 
 .header-task {
@@ -153,18 +154,32 @@
 .btn-action:hover {
   color: var(--font);
   background-color: var(--input-hover);
-  transition: 0.3s;
-  transform: scale(1.05);
+  transition: 0.2s;
 }
 
 #delete {
-  color: red;
+  background-color: red;
+  color: var(--input);
 }
-
+#delete:hover {
+  color: var(--font);
+  background-color: red;
+}
 #completed {
-  color: green;
+  background-color: green;
+  color: var(--input);
+}
+#completed:hover {
+  color: var(--font);
+  background-color: green;
 }
 
 #id {
   display: none;
+}
+
+.task-completed {
+  background-color: var(--input) !important;
+  width: 90%;
+  transition: width 0.3s;
 }
