@@ -7,24 +7,34 @@ export class Task {
   #completed;
   #color;
 
-  constructor(id = 0, title, description, priority, created = "", color = "") {
+  constructor(
+    id = 0,
+    title,
+    description,
+    priority,
+    created = "",
+    color = "",
+    completed = false
+  ) {
     if (id) this.#id = id;
 
     this.#title = title;
     this.#description = description;
     this.#priority = priority;
-    this.#completed = false;
+
+    if (completed) {
+      this.#completed = completed;
+    } else {
+      this.#completed = completed;
+    }
 
     if (created) {
       this.#created = created;
     } else {
-      this.#created = new Date().toLocaleString("pt-br", {
+      this.#created = new Date().toLocaleString("en-US", {
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric",
       });
     }
 
@@ -90,12 +100,22 @@ export class Task {
       priority: this.#priority,
       created: this.#created,
       color: this.#color,
+      completed: this.#completed,
     };
   }
 
   static fromJSON(json) {
-    const { id, title, description, priority, created, color } = json;
+    const { id, title, description, priority, created, color, completed } =
+      json;
 
-    return new Task(id, title, description, priority, created, color);
+    return new Task(
+      id,
+      title,
+      description,
+      priority,
+      created,
+      color,
+      completed
+    );
   }
 }
